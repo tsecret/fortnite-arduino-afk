@@ -1,25 +1,39 @@
-import numpy as np
-from PIL import ImageGrab
 import cv2
+from time import sleep
+from detector import Detector
+from mouse import Mouse
+from enums import Button, Text
+from playbook import PLAYBOOK_FESTIVAL, PLAYBOOK_LEAVE_FESTIVAL
 
-def getImage():
-      frame = np.array(ImageGrab.grab(bbox=(0, 0, 800, 600)))
-      frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
-      return frame
+WIDTH = 1920
+HEIGHT = 1080
 
-def capture_screen():
-    while True:
+detector = Detector()
+mouse = Mouse()
 
+def waitFor(type: Button | Text):
 
-        # cv2.imshow('Screen Capture', screen)
+  print(f"Waiting for {type}")
+  template = cv2.imread(type.value, cv2.IMREAD_GRAYSCALE)
 
-        if cv2.waitKey(25) & 0xFF == ord('q'):
-            cv2.destroyAllWindows()
-            break
+  while True:
+      frame = detector.getImage(WIDTH, HEIGHT)
+      position = detector.find(frame, template)
+
+      if position:
+        print(f'Step {type} found')
+        return position
+
+      sleep(2)
+
 
 def main():
-  frame = getImage()
-  print(frame)
+  for step in PLAYBOOK_FESTIVAL:
+    position = waitFor(step)
+    mouse.click((position[0] + position[2])//2 , (position[1] + position[3])//2)
+
+  mouse.scrollDown()
+
 
 if __name__ == '__main__':
      main()
