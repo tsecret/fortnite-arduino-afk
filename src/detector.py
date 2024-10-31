@@ -5,6 +5,8 @@ from PIL import ImageGrab
 
 class Detector:
   THRESHOLD = 0.8
+  WIDTH = 1280
+  HEIGHT = 720
 
   def __init__(self) -> None:
     pass
@@ -31,7 +33,7 @@ class Detector:
 
     return None
 
-  def getImage(self, width, height):
-    frame = np.array(ImageGrab.grab(bbox=(0, 0, width, height)))
-    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+  def getImage(self, color=cv2.COLOR_BGR2GRAY):
+    frame = np.array(ImageGrab.grab(bbox=(0, 0, self.WIDTH, self.HEIGHT)))
+    frame = cv2.cvtColor(frame, color)
     return frame

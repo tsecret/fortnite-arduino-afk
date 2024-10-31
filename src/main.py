@@ -1,38 +1,33 @@
 import cv2
-from time import sleep
-from detector import Detector
-from mouse import Mouse
+from controls import Controls
+from gamemode.drive import Drive
 from enums import Button, Text
-from playbook import PLAYBOOK_FESTIVAL, PLAYBOOK_LEAVE_FESTIVAL
+from playbook import PLAYBOOK_DRIVE
+import utils
 
-WIDTH = 1920
-HEIGHT = 1080
 
-detector = Detector()
-mouse = Mouse()
-
-def waitFor(type: Button | Text):
-
-  print(f"Waiting for {type}")
-  template = cv2.imread(type.value, cv2.IMREAD_GRAYSCALE)
-
-  while True:
-      frame = detector.getImage(WIDTH, HEIGHT)
-      position = detector.find(frame, template)
-
-      if position:
-        print(f'Step {type} found')
-        return position
-
-      sleep(2)
-
+controls = Controls()
+drive = Drive()
 
 def main():
-  for step in PLAYBOOK_FESTIVAL:
-    position = waitFor(step)
-    mouse.click((position[0] + position[2])//2 , (position[1] + position[3])//2)
 
-  mouse.scrollDown()
+  # configs = utils.readConfig()
+  # gamemode = utils.waitForGamemode(configs)
+
+  drive.start()
+
+  # for step in PLAYBOOK_DRIVE:
+  #   position = utils.waitFor(step)
+
+  #   if step == Button.HOLD_START:
+  #     controls.hold('enter', 5)
+
+  #   elif step == Button.DRIVE_CAR:
+  #     controls.hold('e', 5)
+  #   else:
+  #     controls.click((position[0] + position[2])//2 , (position[1] + position[3])//2)
+
+  # controls.scrollDown()
 
 
 if __name__ == '__main__':

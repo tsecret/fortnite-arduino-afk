@@ -18,6 +18,17 @@ PLAYBOOK_LEGO = [
   Button.PLAY_LEGO,
 ]
 
+PLAYBOOK_DRIVE = [
+  # Button.LIBRARY,
+  # Button.DRIVE,
+  # Button.SELECT,
+  # Text.DRIVE,
+  # Button.PLAY,
+  Button.HOLD_START,
+  Button.DRIVE_CAR,
+  Text.SPEED
+]
+
 PLAYBOOK_LEAVE_FESTIVAL = [
   Button.LEAVE,
   Button.RETURN_TO_LOBBY,
