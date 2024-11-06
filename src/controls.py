@@ -1,29 +1,34 @@
-import pyautogui
+import pydirectinput
 from time import sleep
 import threading
+import win32api, win32con
 
 class Controls:
+
   def click(self, x: int, y: int) -> None:
     print(f'Clicking on [{x} {y}]')
-    pyautogui.click(x, y, duration=1)
+    pydirectinput.click(x, y, duration=1)
 
   def press(self, key: str) -> None:
     print(f"Pressing {key}")
-    pyautogui.press(key)
+    pydirectinput.press(key)
 
   def scrollDown(self) -> None:
-    pyautogui.scroll(-10)
+    pydirectinput.scroll(-10)
 
   def press(self, key, duration):
-      pyautogui.keyDown(key)
-      sleep(duration)
-      pyautogui.keyUp(key)
+    pydirectinput.keyDown(key)
+    sleep(duration)
+    pydirectinput.keyUp(key)
 
   def hold(self, key: str, duration: int):
     threading.Thread(target=self.press, args=(key, duration)).start()
 
   def left(self):
-    pyautogui.press('a')
+    pydirectinput.press('a')
 
   def right(self):
-    pyautogui.press('d')
+    pydirectinput.press('d')
+
+  def moveMouse(self, x: int, y: int):
+    win32api.mouse_event(win32con.MOUSEEVENTF_MOVE, int(x), int(y), 0,0)

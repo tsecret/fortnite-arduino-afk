@@ -13,6 +13,7 @@ class Button(Enum):
   LEAVE = ASSETS_BASE + 'buttonLeave.png'
   RELAUNCH = ASSETS_BASE + 'buttonRelaunch.png'
   HOLD_START = ASSETS_BASE + 'buttonHoldStart.png' #hold
+  KEEP_PLAYING = ASSETS_BASE + 'buttonKeepPlaying.png' # keep checking
 
   # Festival
   FESTIVAL = ASSETS_BASE + 'buttonGamemodeFestival.png'

@@ -127,13 +127,13 @@ class Drive():
         cv2.line(originalFrame, (0, self.TOP_POS), (self.detector.WIDTH, self.TOP_POS), (0, 0, 255), 3)
         cv2.line(originalFrame, (0, self.BOT_POS), (self.detector.WIDTH, self.BOT_POS), (0, 0, 255), 3)
 
-      if time() - last_gas >= 1:
-        if self.MODE == Mode.FORWARD:
-          self.controls.hold('w', 0.0001)
-          last_gas = time()
-        else:
-          self.controls.hold('s', 0.0001)
-          last_gas = time()
+      # if time() - last_gas >= 1.5:
+      #   if self.MODE == Mode.FORWARD:
+      #     self.controls.hold('w', 0.0001)
+      #     last_gas = time()
+      #   else:
+      #     self.controls.hold('s', 0.0001)
+      #     last_gas = time()
 
 
 
