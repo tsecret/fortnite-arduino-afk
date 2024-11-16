@@ -27,6 +27,9 @@ class Button(Enum):
   DRIVE = ASSETS_BASE + 'buttonGamemodeDrive.png'
   DRIVE_CAR = ASSETS_BASE + 'buttonDrive.png' #hold
 
+  # TTTycoon
+  TTTYCOON = ASSETS_BASE + 'buttonGamemodeTTTycoon.png'
+
 class Text(Enum):
   CHOOSE_SONG = ASSETS_BASE + 'textChooseSong.png'
   FESTIVAL = ASSETS_BASE + 'textFestival.png'
@@ -38,7 +41,12 @@ class Text(Enum):
   DRIVE = ASSETS_BASE + 'textDrive.png'
   SPEED = ASSETS_BASE + 'textSpeed.png'
 
+  # TTTycoon
+  TTTYCOON = ASSETS_BASE + 'textTTTycoon.png'
+  TTTYCOON_STARTED = ASSETS_BASE + 'textTTTycoonStarted.png'
+
 class Gamemode(Enum):
   FESTIVAL = 'FESTIVAL'
   LEGO = 'LEGO'
   DRIVE = 'DRIVE'
+  TYCOON = 'TYCOON'

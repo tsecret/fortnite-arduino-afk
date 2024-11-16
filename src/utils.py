@@ -1,12 +1,8 @@
-from enums import Button, Text, Gamemode
-import cv2
-from detector import Detector
-from time import sleep, time as now
+from enums import Gamemode
+from time import sleep
 import json
 from typing import List, Dict
 from datetime import datetime
-
-detector = Detector()
 
 type Config = Dict[str, str, str]
 
@@ -38,39 +34,3 @@ def waitForGamemode(configs: List[Config]) -> Gamemode:
      sleep(1)
 
   return nextGamemode
-
-def waitFor(type: Button | Text, timeout: int = 120):
-
-  print(f"Waiting for {type}")
-  template = cv2.imread(type.value, cv2.IMREAD_GRAYSCALE)
-
-  # Crash detection
-  relaunchButton = cv2.imread(Button.RELAUNCH.value, cv2.IMREAD_GRAYSCALE)
-
-  # Idle detection
-  keepPlayingButton = cv2.imread(Button.KEEP_PLAYING.value, cv2.IMREAD_GRAYSCALE)
-
-  startTime = now()
-
-  while True and now() - startTime < timeout:
-      frame = detector.getImage()
-      position = detector.find(frame, template)
-
-      relaunchButtonPos = detector.find(frame, relaunchButton)
-      if relaunchButtonPos:
-         print('Crash detected')
-         return None, relaunchButtonPos, None
-
-      keepPlayingButtonPos = detector.find(frame, keepPlayingButton)
-      if keepPlayingButtonPos:
-         print('KeepPlaying detected')
-         return None, None, keepPlayingButtonPos
-
-      if position:
-        print(f'Step {type} found')
-        return position, False, False
-
-      sleep(2)
-
-  print(f"waitFor() - {timeout}s timeout")
-  return None, None, None

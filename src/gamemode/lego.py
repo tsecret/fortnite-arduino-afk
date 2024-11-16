@@ -12,14 +12,14 @@ class Lego:
   def start(self):
     print('Starting LEGO playbook')
 
-    for step in PLAYBOOK_LEGO:
-      position, crashPos, idlePos = utils.waitFor(step)
+    # for step in PLAYBOOK_LEGO:
+    #   position, crashPos, idlePos = utils.waitFor(step)
 
-      if idlePos:
-        self.controls.click(idlePos[0], idlePos[1])
+    #   if idlePos:
+    #     self.controls.click(idlePos[0], idlePos[1])
 
-      if position:
-        self.controls.click(position[0], position[1])
+    #   if position:
+    #     self.controls.click(position[0], position[1])
 
     self.idle()
 

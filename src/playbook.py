@@ -42,3 +42,20 @@ PLAYBOOK_LEAVE_LEGO = [
   Button.YES,
   Text.LEGO,
 ]
+
+PLAYBOOK_TTTYCOON = [
+  Button.LIBRARY,
+  Button.TTTYCOON,
+  Button.SELECT,
+  Text.TTTYCOON,
+  Button.PLAY,
+  Button.HOLD_START,
+  # Text.TTTYCOON_STARTED
+]
+
+PLAYBOOK_LEAVE_TTTYCOON = [
+  Button.LEAVE,
+  Button.RETURN_TO_LOBBY,
+  Button.YES,
+  Text.TTTYCOON,
+]
