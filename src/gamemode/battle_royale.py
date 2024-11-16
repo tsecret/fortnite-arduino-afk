@@ -6,6 +6,7 @@ from time import sleep, time as now
 import re
 import easyocr
 from random import randint
+from utils import logger
 
 class BattleRoyale:
   camera = None
@@ -59,10 +60,10 @@ class BattleRoyale:
     last_move_time = now()
 
     while now() - start_time <= IDLE_TIME:
-      print(f"Idle ends in {IDLE_TIME - int(now() - start_time)}s. Moving in {IDLE_TIME - int(now()-last_move_time)}s", end='\r')
+      logger.info(f"Idle ends in {IDLE_TIME - int(now() - start_time)}s. Moving in {IDLE_TIME - int(now()-last_move_time)}s", end='\r')
 
       if now() - last_move_time >= MOVE_TIME:
-        print(f"Moving", end='\r')
+        logger.info(f"Moving", end='\r')
         self.controls.press('w', randint(1, 5))
         self.controls.press('s', randint(1, 5))
 
@@ -100,20 +101,20 @@ class BattleRoyale:
       frame = self.camera.grab((480, 635, 800, 675))
 
       result = self.ocr.readtext(frame, detail=0)
-      print(f"Result from OCR: {result}")
+      logger.info(f"Result from OCR: {result}")
 
       if len(result) < 2:
-        print("Incorrect checkExp reading")
+        logger.info("Incorrect checkExp reading")
         return
 
       result = " ".join(result)
 
       response = re.findall(REGEX, result, re.MULTILINE)
-      print(f"Result from response: {response}")
+      logger.info(f"Result from response: {response}")
 
       if len(response) > 0:
         parsedResult = response[0]
-        print(f'Result from regex: {parsedResult}')
+        logger.info(f'Result from regex: {parsedResult}')
 
         self.lvl = int(parsedResult[0])
         if self.lvlStart is None: self.lvlStart = self.lvl
@@ -123,8 +124,8 @@ class BattleRoyale:
 
         break
 
-      print(f"EXP read did not succeed, trying again")
+      logger.info(f"EXP read did not succeed, trying again")
 
-    print(f"Level: {self.lvlStart} -> {self.lvl}. Remaining exp {self.prevExp or 0} -> {self.exp}")
+    logger.info(f"Level: {self.lvlStart} -> {self.lvl}. Remaining exp {self.prevExp or 0} -> {self.exp}")
 
     self.controls.press('esc', 0.5)

@@ -3,12 +3,19 @@ from time import sleep
 import json
 from typing import List, Dict
 from datetime import datetime
+import logging
 
 type Config = Dict[str, str, str]
 
+logger = logging.getLogger()
+logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)s | %(message)s", handlers=[
+        logging.FileHandler("app.log"),
+        logging.StreamHandler()
+    ])
+
 def readConfig() -> List[Config]:
    with open('./config.json', 'r') as config:
-      print("Reading config")
+      logger.info("Reading config")
       return json.load(config)
 
 def waitForGamemode(configs: List[Config]) -> Gamemode:

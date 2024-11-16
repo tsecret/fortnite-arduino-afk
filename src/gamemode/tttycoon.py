@@ -5,6 +5,7 @@ import re
 from playbook import PLAYBOOK_TTTYCOON, PLAYBOOK_LEAVE_TTTYCOON
 from enums import Button, Text
 from time import sleep
+import logging
 
 class TikTokTycoon:
   controls = Controls()
@@ -74,7 +75,7 @@ class TikTokTycoon:
       self.checkExp()
 
       if self.prevExp == self.exp:
-        print('No xp gain')
+        logging.info('No xp gain')
         break
 
     self.leave()
@@ -91,20 +92,20 @@ class TikTokTycoon:
       frame = self.camera.grab((480, 635, 800, 675))
 
       result = self.ocr.readtext(frame, detail=0)
-      print(f"Result from OCR: {result}")
+      logging.info(f"Result from OCR: {result}")
 
       if len(result) < 2:
-        print("Incorrect checkExp reading")
+        logging.info("Incorrect checkExp reading")
         return
 
       result = " ".join(result)
 
       response = re.findall(REGEX, result, re.MULTILINE)
-      print(f"Result from response: {response}")
+      logging.info(f"Result from response: {response}")
 
       if len(response) > 0:
         parsedResult = response[0]
-        print(f'Result from regex: {parsedResult}')
+        logging.info(f'Result from regex: {parsedResult}')
 
         self.lvl = int(parsedResult[0])
         if self.lvlStart is None: self.lvlStart = self.lvl
@@ -114,8 +115,8 @@ class TikTokTycoon:
 
         break
 
-      print(f"EXP read did not succeed, trying again")
+      logging.info(f"EXP read did not succeed, trying again")
 
-    print(f"Level: {self.lvlStart} -> {self.lvl}. Remaining exp {self.prevExp or 0} -> {self.exp}")
+    logging.info(f"Level: {self.lvlStart} -> {self.lvl}. Remaining exp {self.prevExp or 0} -> {self.exp}")
 
     self.controls.press('esc', 0.5)

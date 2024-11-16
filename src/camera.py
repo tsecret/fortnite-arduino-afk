@@ -4,6 +4,7 @@ import numpy as np
 from typing import Tuple
 from time import sleep, time as now
 from enums import Button, Text
+from utils import logger
 
 class Camera:
   WIDTH = 1280
@@ -57,7 +58,7 @@ class Camera:
     cv2.destroyAllWindows()
 
   def waitFor(self, type: Button | Text, timeout: int = 120):
-    print(f"Waiting for {type}")
+    logger.info(f"Waiting for {type}")
     template = cv2.imread(type.value, cv2.IMREAD_GRAYSCALE)
 
     # Crash detection
@@ -78,19 +79,19 @@ class Camera:
 
         relaunchButtonPos = self.find(frame, relaunchButton)
         if relaunchButtonPos:
-          print('Crash detected')
+          logger.info('Crash detected')
           return None, relaunchButtonPos, None
 
         keepPlayingButtonPos = self.find(frame, keepPlayingButton)
         if keepPlayingButtonPos:
-          print('KeepPlaying detected')
+          logger.info('KeepPlaying detected')
           return None, None, keepPlayingButtonPos
 
         if position:
-          print(f'Step {type} found')
+          logger.info(f'Step {type} found')
           return position, False, False
 
         sleep(2)
 
-    print(f"waitFor() - {timeout}s timeout")
+    logger.info(f"waitFor() - {timeout}s timeout")
     return None, None, None
