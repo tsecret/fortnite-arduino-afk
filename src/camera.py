@@ -57,7 +57,7 @@ class Camera:
 
     cv2.destroyAllWindows()
 
-  def waitFor(self, type: Button | Text, timeout: int = 120):
+  def waitFor(self, type: Button | Text, timeout: int = 240):
     logger.info(f"Waiting for {type}")
     template = cv2.imread(type.value, cv2.IMREAD_GRAYSCALE)
 
