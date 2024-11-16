@@ -1,14 +1,16 @@
-import easyocr
-from controls import Controls
+from playbook import PLAYBOOK_BR_RELOADED, PLAYBOOK_LEAVE_BR_RELOADED
 from camera import Camera
-import re
-from playbook import PLAYBOOK_TTTYCOON, PLAYBOOK_LEAVE_TTTYCOON
+from controls import Controls
 from enums import Button, Text
-from time import sleep
+from time import sleep, time as now
+import re
+import easyocr
+from random import randint
 
-class TikTokTycoon:
-  controls = Controls()
-  camera = Camera()
+class BattleRoyale:
+  camera = None
+  controls = None
+
   ocr = easyocr.Reader(['en'], gpu=False)
 
   lvlStart: int = None
@@ -18,11 +20,12 @@ class TikTokTycoon:
   exp: int = None
 
   def __init__(self):
-    pass
+    self.camera = Camera()
+    self.controls = Controls()
 
   def start(self):
-    # Loads the map
-    for step in PLAYBOOK_TTTYCOON:
+
+    for step in PLAYBOOK_BR_RELOADED:
       position, crashPos, idlePos = self.camera.waitFor(step)
 
       if idlePos:
@@ -39,19 +42,40 @@ class TikTokTycoon:
         else:
           self.controls.click(position[0], position[1])
 
-    sleep(15)
+    self.checkExp()
+    sleep(5)
 
-    # Action script
-    self.controls.playSequence('./scripts/tttycon.json')
+    self.leave()
 
-    self.controls.moveMouse(0, 3000)
+    # self.controls.press('space', 0.5)
 
-    self.idle()
+    # self.idle()
+
+  def idle(self):
+    IDLE_TIME = int(15 * 60 + 60)
+    MOVE_TIME = int(1 * 60)
+
+    start_time = now()
+    last_move_time = now()
+
+    while now() - start_time <= IDLE_TIME:
+      print(f"Idle ends in {IDLE_TIME - int(now() - start_time)}s. Moving in {IDLE_TIME - int(now()-last_move_time)}s", end='\r')
+
+      if now() - last_move_time >= MOVE_TIME:
+        print(f"Moving", end='\r')
+        self.controls.press('w', randint(1, 5))
+        self.controls.press('s', randint(1, 5))
+
+        last_move_time = now()
+
+      sleep(1)
+
+    self.checkExp()
 
   def leave(self):
     self.controls.press('esc', 0.5)
 
-    for step in PLAYBOOK_LEAVE_TTTYCOON:
+    for step in PLAYBOOK_LEAVE_BR_RELOADED:
       position, crashPos, idlePos = self.camera.waitFor(step)
 
       if position:
@@ -63,21 +87,6 @@ class TikTokTycoon:
           self.controls.click(position[0], position[1])
 
     self.controls.scrollDown()
-
-  def idle(self):
-    self.checkExp()
-
-    shootDuration = 30
-
-    while True:
-      self.controls.holdLeftMouse(shootDuration)
-      self.checkExp()
-
-      if self.prevExp == self.exp:
-        print('No xp gain')
-        break
-
-    self.leave()
 
   def checkExp(self) -> bool:
     REGEX = r"LVL\s?(\d+)\s+([\d,]+)\s?XP to LVL (\d+)"

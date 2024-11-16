@@ -9,7 +9,7 @@ class Camera:
   WIDTH = 1280
   HEIGHT = 720
   REGION = (0, 0, WIDTH, HEIGHT)
-  THRESHOLD = 0.8
+  THRESHOLD = 0.7
 
   camera = None
 

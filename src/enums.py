@@ -3,6 +3,7 @@ from enum import Enum
 ASSETS_BASE = './assets/'
 
 class Button(Enum):
+
   # UI
   LIBRARY = ASSETS_BASE + 'buttonGamemodeLibrary.png'
   PLAY = ASSETS_BASE + 'buttonPlay.png'
@@ -30,7 +31,12 @@ class Button(Enum):
   # TTTycoon
   TTTYCOON = ASSETS_BASE + 'buttonGamemodeTTTycoon.png'
 
+  # BR Reload
+  BR_RELOAD = ASSETS_BASE + 'buttonGamemodeBRReload.png'
+
 class Text(Enum):
+  PLAY = ASSETS_BASE + 'textPlay.png'
+
   CHOOSE_SONG = ASSETS_BASE + 'textChooseSong.png'
   FESTIVAL = ASSETS_BASE + 'textFestival.png'
   WORLD_NAME = ASSETS_BASE + 'textWorldName.png'
@@ -45,8 +51,12 @@ class Text(Enum):
   TTTYCOON = ASSETS_BASE + 'textTTTycoon.png'
   TTTYCOON_STARTED = ASSETS_BASE + 'textTTTycoonStarted.png'
 
+  # BR Reload
+  LAST_STOP_IN = ASSETS_BASE + 'textLastStopIn.png'
+
 class Gamemode(Enum):
   FESTIVAL = 'FESTIVAL'
   LEGO = 'LEGO'
   DRIVE = 'DRIVE'
   TYCOON = 'TYCOON'
+  BR_RELOAD = 'BR_RELOAD'

@@ -59,3 +59,18 @@ PLAYBOOK_LEAVE_TTTYCOON = [
   Button.YES,
   Text.TTTYCOON,
 ]
+
+PLAYBOOK_BR_RELOADED = [
+  Button.LIBRARY,
+  Button.BR_RELOAD,
+  Button.SELECT,
+  Button.PLAY,
+  Text.LAST_STOP_IN
+]
+
+PLAYBOOK_LEAVE_BR_RELOADED = [
+  Button.LEAVE,
+  Button.RETURN_TO_LOBBY,
+  Button.YES,
+  Text.PLAY,
+]
