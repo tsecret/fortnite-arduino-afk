@@ -15,6 +15,8 @@ class Button(Enum):
   RELAUNCH = ASSETS_BASE + 'buttonRelaunch.png'
   HOLD_START = ASSETS_BASE + 'buttonHoldStart.png' #hold
   KEEP_PLAYING = ASSETS_BASE + 'buttonKeepPlaying.png' # keep checking
+  CLAIM = ASSETS_BASE + 'buttonClaim.png' # keep checking
+
 
   # Festival
   FESTIVAL = ASSETS_BASE + 'buttonGamemodeFestival.png'
@@ -60,3 +62,9 @@ class Gamemode(Enum):
   DRIVE = 'DRIVE'
   TYCOON = 'TYCOON'
   BR_RELOAD = 'BR_RELOAD'
+
+class WaitForResults(Enum):
+  POSITION = 'POSITION',
+  CRASH = 'CRASH',
+  SLEEP = 'SLEEP',
+  CLAIM = 'CLAIM',

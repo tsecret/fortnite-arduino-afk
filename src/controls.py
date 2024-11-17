@@ -3,11 +3,12 @@ from time import sleep
 import threading
 import win32api, win32con
 import json
+from utils import logger
 
 class Controls:
 
   def click(self, x: int, y: int) -> None:
-    print(f'Clicking on [{x} {y}]')
+    logger.info(f'Clicking on [{x} {y}]')
     pydirectinput.click(x, y, duration=1)
 
   def holdLeftMouse(self, duration: int):
@@ -16,6 +17,7 @@ class Controls:
     pydirectinput.mouseDown(None, None, pydirectinput.MOUSE_LEFT)
 
   def scrollDown(self) -> None:
+    logger.info('Scrolling down')
     pydirectinput.scroll(-10)
 
   def press(self, key, duration):
@@ -45,12 +47,12 @@ class Controls:
     for i, action in enumerate(actions):
 
       sleep_time = action['time'] - t
-      print('sleep', sleep_time)
+      logger.info(f"Sleeping for {sleep_time}s")
 
       if sleep_time > 0:
         sleep(sleep_time)
 
-      print(action)
+      logger.info(f"Action {action['action']}; {action['key']}; duration {action['duration']}")
 
       if action['action'] == 'key':
         pydirectinput.press(action['key'], duration=action['duration'])

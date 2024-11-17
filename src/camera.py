@@ -1,10 +1,12 @@
 import dxcam
 import cv2
 import numpy as np
-from typing import Tuple
+from typing import Tuple, List
 from time import sleep, time as now
 from enums import Button, Text
 from utils import logger
+import easyocr
+from enums import WaitForResults
 
 class Camera:
   WIDTH = 1280
@@ -13,9 +15,11 @@ class Camera:
   THRESHOLD = 0.7
 
   camera = None
+  ocr = None
 
   def __init__(self) -> None:
     self.camera = dxcam.create(output_color='RGB', output_idx=0)
+    self.ocr = easyocr.Reader(['en'], gpu=False)
 
   def grab(self, region = REGION):
     return self.camera.grab(region)
@@ -57,7 +61,7 @@ class Camera:
 
     cv2.destroyAllWindows()
 
-  def waitFor(self, type: Button | Text, timeout: int = 240):
+  def waitFor(self, type: Button | Text, timeout: int = 240) -> Tuple[WaitForResults, Tuple[int, int, int, int]]:
     logger.info(f"Waiting for {type}")
     template = cv2.imread(type.value, cv2.IMREAD_GRAYSCALE)
 
@@ -66,6 +70,9 @@ class Camera:
 
     # Idle detection
     keepPlayingButton = cv2.imread(Button.KEEP_PLAYING.value, cv2.IMREAD_GRAYSCALE)
+
+    # Claim stars
+    claimStars = cv2.imread(Button.CLAIM.value, cv2.IMREAD_GRAYSCALE)
 
     startTime = now()
 
@@ -80,18 +87,28 @@ class Camera:
         relaunchButtonPos = self.find(frame, relaunchButton)
         if relaunchButtonPos:
           logger.info('Crash detected')
-          return None, relaunchButtonPos, None
+          return WaitForResults.CRASH, relaunchButtonPos
 
         keepPlayingButtonPos = self.find(frame, keepPlayingButton)
         if keepPlayingButtonPos:
           logger.info('KeepPlaying detected')
-          return None, None, keepPlayingButtonPos
+          return WaitForResults.SLEEP, keepPlayingButtonPos
+
+        claimStarsPos = self.find(frame, claimStars)
+        if claimStarsPos:
+          logger.info('Claim Stars detected')
+          return WaitForResults.CLAIM, claimStarsPos
 
         if position:
           logger.info(f'Step {type} found')
-          return position, False, False
+          return WaitForResults.POSITION, position
 
         sleep(2)
 
     logger.info(f"waitFor() - {timeout}s timeout")
-    return None, None, None
+    return None
+
+  def readText(self, frame) -> List[str]:
+    return self.ocr.readtext(frame, detail=0)
+
+camera = Camera()

@@ -15,6 +15,9 @@ def main():
     tycoon = TikTokTycoon()
     tycoon.start()
 
+    tycoon = TikTokTycoon()
+    tycoon.start()
+
     br = BattleRoyale()
     br.start()
 
