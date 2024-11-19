@@ -19,7 +19,7 @@ class Camera:
 
   def __init__(self) -> None:
     self.camera = dxcam.create(output_color='RGB', output_idx=0)
-    self.ocr = easyocr.Reader(['en'], gpu=False)
+    self.ocr = easyocr.Reader(['en'], gpu=True)
 
   def grab(self, region = REGION):
     return self.camera.grab(region)
@@ -106,7 +106,7 @@ class Camera:
         sleep(2)
 
     logger.info(f"waitFor() - {timeout}s timeout")
-    return None
+    return None, None
 
   def readText(self, frame) -> List[str]:
     return self.ocr.readtext(frame, detail=0)

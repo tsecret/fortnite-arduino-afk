@@ -9,12 +9,12 @@ class TikTokTycoon(GamemodeBase):
     # Loads the map
     self.executePlaybook(PLAYBOOK_TTTYCOON)
 
-    sleep(15)
+    sleep(20)
 
     # Action script
     self.controls.playSequence('./scripts/tttycon.json')
 
-    self.controls.moveMouse(0, 1000)
+    self.controls.moveMouse(0, 3000)
 
     self.idle()
 

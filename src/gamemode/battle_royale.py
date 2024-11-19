@@ -8,7 +8,6 @@ class BattleRoyale(GamemodeBase):
 
   def start(self):
     self.executePlaybook(PLAYBOOK_BR_RELOADED)
-    sleep(5)
     self.leave()
 
   def idle(self):

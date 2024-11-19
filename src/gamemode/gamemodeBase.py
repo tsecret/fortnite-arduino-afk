@@ -41,6 +41,8 @@ class GamemodeBase:
         else:
           self.controls.click(position[0], position[1])
 
+      # Image was not found within the given interval
+      if type is None:
         continue
 
   def end(self) -> None:

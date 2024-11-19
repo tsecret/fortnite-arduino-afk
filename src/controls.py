@@ -9,7 +9,7 @@ class Controls:
 
   def click(self, x: int, y: int) -> None:
     logger.info(f'Clicking on [{x} {y}]')
-    pydirectinput.click(x, y, duration=1)
+    pydirectinput.click(x, y, duration=0.5)
 
   def holdLeftMouse(self, duration: int):
     pydirectinput.mouseDown(None, None, pydirectinput.MOUSE_LEFT)
