@@ -4,7 +4,7 @@ import utils
 from controls import Controls
 from time import sleep, time as now
 from random import randint
-from gamemodeBase import GamemodeBase
+from gamemode.gamemodeBase import GamemodeBase
 
 class Lego(GamemodeBase):
 
