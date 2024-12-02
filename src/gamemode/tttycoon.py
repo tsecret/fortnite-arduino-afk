@@ -21,6 +21,7 @@ class TikTokTycoon(GamemodeBase):
   def leave(self):
     self.controls.press('esc', 0.5)
     self.executePlaybook(PLAYBOOK_LEAVE_TTTYCOON)
+    sleep(2)
     self.controls.scrollDown()
 
   def idle(self):

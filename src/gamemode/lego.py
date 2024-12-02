@@ -4,24 +4,18 @@ import utils
 from controls import Controls
 from time import sleep, time as now
 from random import randint
+from gamemodeBase import GamemodeBase
 
-class Lego:
-  def __init__(self):
-    self.controls = Controls()
+class Lego(GamemodeBase):
 
   def start(self):
-    print('Starting LEGO playbook')
+    self.executePlaybook(PLAYBOOK_LEGO)
 
-    # for step in PLAYBOOK_LEGO:
-    #   position, crashPos, idlePos = utils.waitFor(step)
-
-    #   if idlePos:
-    #     self.controls.click(idlePos[0], idlePos[1])
-
-    #   if position:
-    #     self.controls.click(position[0], position[1])
-
-    self.idle()
+  def leave(self):
+    self.controls.press('esc', 0.5)
+    self.executePlaybook(PLAYBOOK_LEAVE_LEGO)
+    sleep(2)
+    self.controls.scrollDown()
 
   def idle(self):
     IDLE_TIME = int(2.5 * 60 * 60) + 60
@@ -46,6 +40,4 @@ class Lego:
 
       sleep(1)
 
-
-  def end(self):
-    pass
+    self.leave()

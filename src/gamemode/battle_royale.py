@@ -34,4 +34,5 @@ class BattleRoyale(GamemodeBase):
   def leave(self):
     self.controls.press('esc', 0.5)
     self.executePlaybook(PLAYBOOK_LEAVE_BR_RELOADED)
+    sleep(2)
     self.controls.scrollDown()
