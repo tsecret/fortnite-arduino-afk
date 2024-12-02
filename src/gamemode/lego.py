@@ -11,6 +11,8 @@ class Lego(GamemodeBase):
   def start(self):
     self.executePlaybook(PLAYBOOK_LEGO)
 
+    self.idle()
+
   def leave(self):
     self.controls.press('esc', 0.5)
     self.executePlaybook(PLAYBOOK_LEAVE_LEGO)
