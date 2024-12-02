@@ -40,6 +40,7 @@ class GamemodeBase:
 
         else:
           self.controls.click(position[0], position[1])
+          sleep(2)
 
       # Image was not found within the given interval
       if type is None:
