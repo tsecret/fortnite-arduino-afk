@@ -1,6 +1,5 @@
 comtypes==1.4.8
 dxcam==0.0.5
-easyocr==1.7.2
 filelock==3.16.1
 fsspec==2024.10.0
 imageio==2.36.0
@@ -27,16 +26,6 @@ PyRect==0.2.0
 PyScreeze==1.0.1
 python-bidi==0.6.3
 pytweening==1.2.0
-pywin32==308
+pywin32==308 ; sys_platform == 'win32'
 PyYAML==6.0.2
-scikit-image==0.24.0
-scipy==1.14.1
-setuptools==75.3.0
-shapely==2.0.6
-six==1.16.0
-sympy==1.13.1
-tifffile==2024.9.20
-torch==2.5.1+cu124
-torchaudio==2.5.1+cu124
-torchvision==0.20.1
-typing_extensions==4.12.2
+easyocr

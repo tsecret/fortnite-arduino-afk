@@ -8,7 +8,6 @@ from enums import Button, Text, WaitForResults
 class GamemodeBase:
   controls = Controls()
 
-
   lvlStart: int = None
   lvl: int = None
 

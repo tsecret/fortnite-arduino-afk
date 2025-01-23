@@ -1,12 +1,17 @@
-import dxcam
 import cv2
 import numpy as np
+import pyautogui
 from typing import Tuple, List
 from time import sleep, time as now
-from enums import Button, Text
-from utils import logger
 import easyocr
+
+from utils import logger
+from config import config
+from enums import Button, Text
 from enums import WaitForResults
+
+if config.isWindows():
+  import dxcam
 
 class Camera:
   WIDTH = 1280
@@ -18,11 +23,16 @@ class Camera:
   ocr = None
 
   def __init__(self) -> None:
-    self.camera = dxcam.create(output_color='RGB', output_idx=0)
-    self.ocr = easyocr.Reader(['en'], gpu=True)
+    if config.isWindows():
+      self.camera = dxcam.create(output_color='RGB', output_idx=0)
+      self.ocr = easyocr.Reader(['en'], gpu=True)
 
   def grab(self, region = REGION):
-    return self.camera.grab(region)
+    if config.isWindows():
+      return self.camera.grab(region)
+
+    if config.isMac():
+      return np.array(pyautogui.screenshot(region=self.REGION))
 
   def _matchTemplate(self, frame, template):
     gray = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
@@ -110,5 +120,6 @@ class Camera:
 
   def readText(self, frame) -> List[str]:
     return self.ocr.readtext(frame, detail=0)
+    pass
 
 camera = Camera()

@@ -1,11 +1,8 @@
 from enums import Gamemode
 from time import sleep
 import json
-from typing import List, Dict
 from datetime import datetime
 import logging
-
-type Config = Dict[str, str, str]
 
 logger = logging.getLogger()
 logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)s | %(message)s", handlers=[
@@ -13,12 +10,12 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)s | %(
         logging.StreamHandler()
     ])
 
-def readConfig() -> List[Config]:
+def readConfig():
    with open('./config.json', 'r') as config:
       logger.info("Reading config")
       return json.load(config)
 
-def waitForGamemode(configs: List[Config]) -> Gamemode:
+def waitForGamemode(configs) -> Gamemode:
   assert len(configs), 'Config list is empty'
 
   now = datetime.now().timestamp()

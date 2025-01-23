@@ -1,9 +1,17 @@
-import pydirectinput
-from time import sleep
 import threading
-import win32api, win32con
 import json
+from time import sleep
+
 from utils import logger
+from config import config
+
+if config.isWindows():
+  import win32api, win32con
+  import pydirectinput
+
+if config.isMac():
+  import pyautogui as pydirectinput
+
 
 class Controls:
 
@@ -35,7 +43,9 @@ class Controls:
     pydirectinput.press('d')
 
   def moveMouse(self, x: int, y: int):
-    win32api.mouse_event(win32con.MOUSEEVENTF_MOVE, int(x), int(y), 0,0)
+    if config.isWindows():
+      win32api.mouse_event(win32con.MOUSEEVENTF_MOVE, int(x), int(y), 0,0)
+
     sleep(0.5)
 
   def playSequence(self, name: str):
